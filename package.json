@@ -1,0 +1,25 @@
+{
+  "name": "future-letters-backend",
+  "version": "1.0.0",
+  "description": "sending letters",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicoledanuwidjaja/future-letters-backend.git"
+  },
+  "keywords": [
+    "letter"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nicoledanuwidjaja/future-letters-backend/issues"
+  },
+  "homepage": "https://github.com/nicoledanuwidjaja/future-letters-backend#readme",
+  "dependencies": {
+    "firebase": "^7.8.0"
+  }
+}
