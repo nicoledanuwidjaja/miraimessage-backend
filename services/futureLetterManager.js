@@ -3,12 +3,29 @@ const admin = require('firebase-admin');
 let serviceAccount = require('./serviceAccountKeys.json');
 
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://future-letters.firebaseio.com"
 });
 
 let db = admin.firestore();
 let users = db.collection("users");
 let letters = db.collection("letters");
+
+exports.getShit = function() {
+    letters.doc('cyqoSsCGZ8YJeJ5v3kvX').get()
+        .then(doc => {
+            if (!doc.exists) {
+                console.log('No such letter!');
+            } else {
+                console.log(doc.data());
+                return 'hi';
+            }
+        })
+        .catch(err => {
+            console.log('Error getting letter ', err);
+        });
+};
+
 
 // __________________USER METHODS__________________
 

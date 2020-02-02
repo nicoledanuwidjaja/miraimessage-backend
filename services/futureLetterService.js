@@ -1,6 +1,10 @@
 const futureLetterManager = require('./futureLetterManager.js');
 const errorMsg = 'Failed Action: Required field does not exist';
 
+module.exports.getShit = function(req, res) {
+    res.send(futureLetterManager.getShit());
+};
+
 module.exports.createUser = function(req, res) {
     const json = req.body;
     if (json['email']) {

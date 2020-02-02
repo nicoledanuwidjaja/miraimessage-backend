@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "future-letters",
+    "future-letters": "future-letters"
+  }
+}
