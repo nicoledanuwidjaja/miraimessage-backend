@@ -1,5 +1,3 @@
-var firebase = require("firebase/app");
-// require("firebase/firestore");
 const admin = require('firebase-admin');
 const functions = require('firebase-functions');
 
@@ -12,18 +10,18 @@ let letters = db.collection("letters");
 // __________________USER METHODS__________________
 
 // creates a user with the given JSON's information
-function createUser(json) {
+exports.createUser = function(json) {
     users.add({
         email: json['email'],
-        letters: json['letters'],
-        receivedLetters: json['receivedLetters']
+        letters: [],
+        receivedLetters: []
     }).then(user => {
         console.log('Added user with ID: ', user.id)
     })
-}
+};
 
 // gets a user with the given JSON's id
-function getUser(json) {
+exports.getUser = function(json) {
     users.doc(json['id']).get()
         .then(ref => {
             if (!ref.exists) {
@@ -36,22 +34,22 @@ function getUser(json) {
         .catch(err => {
             console.log('Error getting user ', err);
         });
-}
+};
 
 // gets the letters written by user with the given JSON's email
-function getLetters(json) {
+exports.getLetters = function(json) {
     let queryResult = users.where('email', '==', json['email']).get();
     return queryResult.docs.get(0).data()['letters'];
-}
+};
 
 // gets the received letters of the user with the given JSON's email
-function getReceivedLetters(json) {
+exports.getReceivedLetters = function(json) {
     let queryResult = users.where('email', '==', json['email']).get();
     return queryResult.docs.get(0).data()['receivedLetters'];
-}
+};
 
 // updates a user with the given JSON's id with the JSON's info
-function updateUser(json) {
+exports.updateUser = function(json) {
     users.doc(json['id']).set(json, {merge: true})
         .then(() => {
             console.log('Updated user');
@@ -59,18 +57,18 @@ function updateUser(json) {
         .catch(err => {
             console.log('Error updating user ', err)
         })
-}
+};
 
 // update the user with the given JSON's id to have the given email
-function updateEmail(json, email) {
-    users.doc(json['id']).update({"email" : email})
+exports.updateEmail = function(json) {
+    users.doc(json['id']).update({"email" : json['email']})
         .then(() => {
             console.log('Updated email ', id);
         })
-        .catch(err => {
+        .catch(() => {
             console.log("Error updating email", id);
         })
-}
+};
 
 // update the user with the given JSON's id to make the given field match the given JSON
 function addLetterToUser(json, field) {
@@ -84,17 +82,17 @@ function addLetterToUser(json, field) {
 }
 
 // insert own letter to the user
-function addOwnLetterToUser(json) {
+exports.addOwnLetterToUser = function(json) {
     addLetterToUser(json, 'letters');
-}
+};
 
 // insert received letter to the user
-function addReceivedLetterToUser(json) {
+exports.addReceivedLetterToUser = function(json) {
     addLetterToUser(json, "receivedLetters");
-}
+};
 
 // delete this user from existence
-function deleteUser(json) {
+exports.deleteUser = function(json) {
     users.doc(json['id']).delete()
         .then(() => {
             console.log('Deleted user ', json['id']);
@@ -102,14 +100,14 @@ function deleteUser(json) {
         .catch(err => {
             console.log('Error deleting user ', err);
         })
-}
+};
 
 
 
 
 // __________________LETTER METHODS__________________
 // create a letter
-function createLetter(json) {
+exports.createLetter = function(json) {
     letters.add({
         body: json['body'],
         header: json['header'],
@@ -119,10 +117,10 @@ function createLetter(json) {
     }).then(ref => {
         console.log('Added letter with ID: ', ref.id)
     })
-}
+};
 
 // get a letter based on letter id
-function getLetter(json) {
+exports.getLetter = function(json) {
     users.doc(json['id']).get()
         .then(letter => {
             if (!letter.exists) {
@@ -135,10 +133,10 @@ function getLetter(json) {
         .catch(err => {
             console.log('Error getting letter', err);
         });
-}
+};
 
 // delete a letter based on letter id
-function deleteLetter(json) {
+exports.deleteLetter = function(json) {
     letters.doc(json['id']).delete()
         .then(() => {
             console.log('Deleted letter ', id);
@@ -146,26 +144,9 @@ function deleteLetter(json) {
         .catch(err => {
             console.log('Error deleting user ', err);
         })
-}
+};
 
 // get the reply letters to a given letter id
-function getReplyLetter(json) {
+exports.getReplyLetter = function(json) {
     return letters.doc(json['id']).get().get('replyLetters');
-}
-
-
-
-
-// // Your web app's Firebase configuration
-// var firebaseConfig = {
-//     apiKey: "AIzaSyCq3s56kbsHNKn5doMWi8vC5ZQVh70C-wA",
-//     authDomain: "future-letters.firebaseapp.com",
-//     databaseURL: "https://future-letters.firebaseio.com",
-//     projectId: "future-letters",
-//     storageBucket: "future-letters.appspot.com",
-//     messagingSenderId: "748276291133",
-//     appId: "1:748276291133:web:d9b8d30e69bfa6459d7c54",
-//     measurementId: "G-G2N77PN9MT",
-// };
-// // Initialize Firebase
-// firebase.initializeApp(firebaseConfig);
+};
