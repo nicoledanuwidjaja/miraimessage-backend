@@ -25,18 +25,18 @@ module.exports.getUser = function(req, res) {
 };
 
 module.exports.getLetters = function(req, res) {
-  const json = req.body;
-  if (json['email']) {
-      res.status(200).send(futureLetterManager.getLetters(json))
+  const email = req.params.user;
+  if (email) {
+      res.status(200).send(futureLetterManager.getLetters(email))
   } else {
       res.status(404).send(errorMsg)
   }
 };
 
 module.exports.getReceivedLetters = function(req, res) {
-    const json = req.body;
-    if (json['email']) {
-        res.status(200).send(futureLetterManager.getReceivedLetters(json))
+    const email = req.params.user;
+    if (email) {
+        res.status(200).send(futureLetterManager.getReceivedLetters(email))
     } else {
         res.status(404).send(errorMsg)
     }

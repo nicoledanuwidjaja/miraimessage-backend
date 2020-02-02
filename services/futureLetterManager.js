@@ -18,6 +18,7 @@ exports.getShit = function() {
                 console.log('No such letter!');
             } else {
                 console.log(doc.data());
+                console.log("Hello!");
                 return 'hi';
             }
         })
@@ -56,16 +57,34 @@ exports.getUser = function(json) {
         });
 };
 
-// gets the letters written by user with the given JSON's email
-exports.getLetters = function(json) {
-    let queryResult = users.where('email', '==', json['email']).get();
-    return queryResult.docs.get(0).data()['letters'];
+// gets the letters written by user with the given email
+exports.getLetters = function(email) {
+    users.where('email', '==', email).get()
+        .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+            return doc.data()['letters'];
+        });
+    })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+        });
 };
 
-// gets the received letters of the user with the given JSON's email
-exports.getReceivedLetters = function(json) {
-    let queryResult = users.where('email', '==', json['email']).get();
-    return queryResult.docs.get(0).data()['receivedLetters'];
+// gets the received letters of the user with the given email
+exports.getReceivedLetters = function(email) {
+    users.where('email', '==', email).get()
+        .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+                return doc.data()['receivedLetters'];
+            });
+        })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+        });
 };
 
 // updates a user with the given JSON's id with the JSON's info
