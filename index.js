@@ -13,21 +13,21 @@ app.use(bodyParser.json());
 app.get('/haha', futureLetterService.getShit);
 
 // get requests
-app.get('/user/get', futureLetterService.getUser);
-app.get('/user/get/letter', futureLetterService.getLetters);
-app.get('/user/get/receivedLetters', futureLetterService.getReceivedLetters);
-app.get('/user/get/replyLetter', futureLetterService.getReplyLetter);
+app.get('/:user/get', futureLetterService.getUser);
+app.get('/:user/get/letter', futureLetterService.getLetters);
+app.get('/:user/get/receivedLetters', futureLetterService.getReceivedLetters);
+app.get('/:user/get/replyLetter', futureLetterService.getReplyLetter);
 app.get('/letter/get', futureLetterService.getLetter);
 
 // post requests
-app.post('/user/create', futureLetterService.createUser);
-app.post('/letter/create', futureLetterService.createLetter);
+app.post('/:user/create', futureLetterService.createUser);
+app.post('/:letter/create', futureLetterService.createLetter);
 
 // put requests
-app.put('/user/update/email', futureLetterService.updateEmail);
-app.put('/user/update/user', futureLetterService.updateUser);
-app.put('/user/update/ownLetter', futureLetterService.addOwnLetterToUser);
-app.put('/user/update/receivedLetter', futureLetterService.addReceivedLetterToUser);
+app.put('/:user/update/email', futureLetterService.updateEmail);
+app.put('/:user/update/user', futureLetterService.updateUser);
+app.put('/:user/update/ownLetter', futureLetterService.addOwnLetterToUser);
+app.put('/:user/update/receivedLetter', futureLetterService.addReceivedLetterToUser);
 
 // delete requests
 app.delete('/user/delete', futureLetterService.deleteUser);
