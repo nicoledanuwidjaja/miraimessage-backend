@@ -59,13 +59,15 @@ exports.getUser = function(json) {
 
 // gets the letters written by user with the given email
 exports.getLetters = function(email) {
+    const letterArray = [];
     users.where('email', '==', email).get()
         .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
-            return doc.data()['letters'];
+            letterArray.push(doc.data());
         });
+        console.log(letterArray);
+        return letterArray;
     })
         .catch(function(error) {
             console.log("Error getting documents: ", error);

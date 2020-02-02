@@ -20,8 +20,8 @@ app.get('/:user/get/replyLetter', futureLetterService.getReplyLetter);
 app.get('/letter/get', futureLetterService.getLetter);
 
 // post requests
-app.post('/:user/create', futureLetterService.createUser);
-app.post('/:letter/create', futureLetterService.createLetter);
+app.post('/user/create', futureLetterService.createUser);
+app.post('/letter/create', futureLetterService.createLetter);
 
 // put requests
 app.put('/:user/update/email', futureLetterService.updateEmail);
