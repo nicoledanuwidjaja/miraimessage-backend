@@ -1,9 +1,11 @@
 const functions = require('firebase-functions');
+const cors = require('cors');
 const express = require('express');
 const app = express();
 const futureLetterService = require('./services/futureLetterService.js');
 const bodyParser = require("body-parser");
 
+app.use(cors({origin: true}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
